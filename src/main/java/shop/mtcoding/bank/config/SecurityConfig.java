@@ -42,6 +42,11 @@ public class SecurityConfig {
         http.headers().frameOptions().disable();
         http.csrf().disable();
 
+        http.exceptionHandling().authenticationEntryPoint(
+                (request, response, authException) -> {
+                    CustomResponseUtil.fail(response, "권한없음");
+                });
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.formLogin().disable();
         http.httpBasic().disable();
